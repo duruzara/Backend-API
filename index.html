@@ -1,18 +1,23 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <form action="http://localhost:3000/api/submit-cat" target="_blank" method="post">
-      <label for="catName">Cat Name: </label>
-      <input id="catName" name="catName" type="text">
-      <input type="submit" value="submit">
-    </form>
-    <div id="root"></div>
-    <script type="module" src="/app.js"></script>
-  </body>
+app.get("/", (req, res) => {
+res.send(`
+<html>
+<head>
+<title>Cat API</title>
+</head>
+
+<body>
+<h1>Cat API</h1>
+
+<form action="/api/submit-cat" method="POST">
+<input type="text" name="catName" placeholder="Enter Cat Name"/>
+<button type="submit">Add Cat</button>
+</form>
+
+<br/>
+
+<a href="/api/cats">View All Cats</a>
+
+</body>
 </html>
+`)
+})
