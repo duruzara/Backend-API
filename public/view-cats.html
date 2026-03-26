@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>View Cats</title>
+</head>
+
+<body>
+
+<h1>All Cats</h1>
+
+<div id="cats"></div>
+
+<br>
+
+<a href="/">Home</a>
+
+<script>
+
+fetch('/api/cats')
+.then(res => res.json())
+.then(data => {
+
+const catsDiv = document.getElementById("cats")
+
+data.cats.forEach(cat => {
+
+catsDiv.innerHTML += `
+<div>
+<b>${cat.name}</b>
+
+<button onclick="deleteCat('${cat._id}')">
+Delete
+</button>
+
+<button onclick="editCat('${cat._id}','${cat.name}')">
+Edit
+</button>
+
+<br><br>
+</div>
+`
+
+})
+
+})
+
+function deleteCat(id){
+
+fetch('/api/delete-cat/' + id,{
+method:'DELETE'
+})
+.then(()=>location.reload())
+
+}
+
+function editCat(id,name){
+
+const newName = prompt("Enter new name", name)
+
+if(!newName) return
+
+fetch('/api/update-cat/' + id,{
+method:'PUT',
+headers:{
+'Content-Type':'application/json'
+},
+body: JSON.stringify({
+catName:newName
+})
+})
+.then(()=>location.reload())
+
+}
+
+</script>
+
+</body>
+</html>
